@@ -1,11 +1,12 @@
 package org.dnltsk.d2d.challenge.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.Instant;
 
 @Data
-//@AllArgsConstructor
+@Builder
 public class Trip {
 
     private String region;
