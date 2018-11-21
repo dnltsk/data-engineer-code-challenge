@@ -5,7 +5,8 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
-import static org.mockito.Mockito.doNothing;
+import java.sql.SQLException;
+
 import static org.mockito.Mockito.mock;
 
 @TestConfiguration
@@ -13,10 +14,8 @@ public class NoDbConfiguration {
 
     @Bean
     @Primary
-    public DbInitiator mockDbInitiator(){
-        DbInitiator mock = mock(DbInitiator.class);
-        doNothing().when(mock).resetDb();
-        return mock;
+    public DbInitiator mockDbInitiator() throws SQLException {
+        return mock(DbInitiator.class);
     }
 
     @Bean
