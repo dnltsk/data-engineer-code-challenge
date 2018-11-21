@@ -1,5 +1,6 @@
 package org.dnltsk.d2d.challenge;
 
+import org.dnltsk.d2d.challenge.parse.TripParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,13 +13,13 @@ import static org.dnltsk.d2d.challenge.TestDataRepository.smallTestData;
 import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
-public class HttpControllerTest {
+public class RequestHandlerTest {
 
     @Mock
-    private RequestHandler requestHandler;
+    private TripParser parser;
 
     @InjectMocks
-    private HttpController httpController;
+    private RequestHandler requestHandler;
 
     @Before
     public void setUp() throws Exception {
@@ -28,7 +29,6 @@ public class HttpControllerTest {
     @Test
     public void incoming_csv_is_forwarded_to_parser() {
         requestHandler.handleTripsAsCsv(smallTestData);
-        verify(requestHandler).handleTripsAsCsv(smallTestData);
+        verify(parser).parse(smallTestData);
     }
-
 }

@@ -3,6 +3,7 @@ package org.dnltsk.d2d.challenge;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.dnltsk.d2d.challenge.model.Stats;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,13 +17,17 @@ import java.net.URISyntaxException;
 @RestController
 public class HttpController {
 
+    @Autowired
+    private RequestHandler requestHandler;
+
     @ApiOperation(value = "post new trips as csv")
     @PostMapping("/trips")
     public ResponseEntity<Void> postTrips(
-        @ApiParam(name = "tripsCsv", value="csv to upload")
-        @RequestBody String tripsCsv
+        @ApiParam(name = "tripsAsCsv", value="csv to upload.<ul><li>header like 'region,origin_coord,destination_coord,datetime,datasource' is expected</li><li>first row is getting ignored</li></ul>")
+        @RequestBody String tripsAsCsv
     ) throws URISyntaxException {
-        return ResponseEntity.created(new URI("/trip/1")).build();
+        requestHandler.handleTripsAsCsv(tripsAsCsv);
+        return ResponseEntity.created(new URI("")).build();
     }
 
     @ApiOperation(value = "get statistics")
