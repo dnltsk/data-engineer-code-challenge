@@ -8,20 +8,21 @@ CREATE TABLE IF NOT EXISTS public.tiles_z_10
     id serial,
     x integer NOT NULL,
     y integer NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE (x, y)
 );
 SELECT AddGeometryColumn ('public', 'tiles_z_10', 'geom', 4326, 'POLYGON', 2);
 CREATE INDEX tiles_z_10_gix ON tiles_z_10 USING GIST (geom);
 CREATE TABLE IF NOT EXISTS public.regions
 (
     id serial,
-    name VARCHAR(256) NOT NULL,
+    name VARCHAR(256) NOT NULL UNIQUE,
     PRIMARY KEY (id)
 );
 CREATE TABLE IF NOT EXISTS public.datasources
 (
     id serial,
-    name VARCHAR(256),
+    name VARCHAR(256) NOT NULL UNIQUE,
     PRIMARY KEY (id)
 );
 CREATE TABLE IF NOT EXISTS public.trips
