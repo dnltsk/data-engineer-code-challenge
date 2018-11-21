@@ -2,6 +2,7 @@ package org.dnltsk.d2d.challenge.parse;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.dnltsk.d2d.challenge.model.Trip;
 import org.springframework.stereotype.Service;
 import rx.Observable;
@@ -11,8 +12,10 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.Arrays;
 
 @Service
+@Slf4j
 public class TripParser {
 
     private static final DateTimeFormatter formatter = new DateTimeFormatterBuilder()
@@ -27,6 +30,7 @@ public class TripParser {
         return Observable
             .from(csvReader)
             .map(csvRow -> {
+                log.debug("parsing "+ Arrays.toString(csvRow));
                 return Trip.builder()
                     .region(csvRow[0].toLowerCase())
                     .originAsWkt(csvRow[1])
