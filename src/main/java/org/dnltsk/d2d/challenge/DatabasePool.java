@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 @Service
 public class DatabasePool {
@@ -26,17 +29,24 @@ public class DatabasePool {
     @Value("${postgres.pass}")
     private String pass;
 
+    private String connectionUrl;
+
     private ConnectionProvider connectionProvider;
 
     @PostConstruct
     private void initConnection(){
-        String url = "jdbc:postgresql://" + host + ":" + port + "/" + dbname;
-        connectionProvider = new ConnectionProviderFromUrl(url, user, pass);
+        connectionUrl = "jdbc:postgresql://" + host + ":" + port + "/" + dbname;
+        connectionProvider = new ConnectionProviderFromUrl(connectionUrl, user, pass);
     }
 
-    public Database getDatabase() {
-        Database db = Database.from(connectionProvider);
-        return db;
+    public Database openRxDatabase() {
+        return Database.from(connectionProvider);
+    }
+
+    public Connection openJdbcConnection() throws SQLException {
+        Connection conn = DriverManager.getConnection(connectionUrl, user, pass);
+        conn.setAutoCommit(false);
+        return conn;
     }
 
 }
