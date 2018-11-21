@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+@SpringBootTest(classes = NoDbConfiguration.class, webEnvironment = RANDOM_PORT)
 public class HttpControllerTest {
 
     @Autowired

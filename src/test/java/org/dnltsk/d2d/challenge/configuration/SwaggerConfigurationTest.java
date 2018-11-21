@@ -1,5 +1,6 @@
 package org.dnltsk.d2d.challenge.configuration;
 
+import org.dnltsk.d2d.challenge.NoDbConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import static org.springframework.http.HttpStatus.OK;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+@SpringBootTest(classes = NoDbConfiguration.class, webEnvironment = RANDOM_PORT)
 public class SwaggerConfigurationTest {
 
     @Autowired
