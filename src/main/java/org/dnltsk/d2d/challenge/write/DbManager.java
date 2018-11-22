@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DbManager {
 
+    private final static int chunkSize = 10;
+
     @Autowired
     private DatabasePool databasePool;
 
@@ -51,7 +53,7 @@ public class DbManager {
     private void insertTrips(List<Trip> trips, Connection conn) {
         Observable.just(trips)
             .flatMapIterable(t -> t)
-            .buffer(10)
+            .buffer(chunkSize)
             .toBlocking()
             .subscribe(t -> writer.insertChunkOfTrips(t, conn));
     }
