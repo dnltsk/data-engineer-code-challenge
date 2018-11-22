@@ -6,9 +6,10 @@
 
 ## Requirements
 
-to build and run:
+to build and run locally:
 
-* JDK & JRE <= 1.8
+* JDK & JRE >= 1.8
+* Postgres 9 + PostGIS service
 
 for IDE:
 
