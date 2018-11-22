@@ -1,7 +1,7 @@
 package org.dnltsk.d2d.challenge;
 
 import org.dnltsk.d2d.challenge.parse.TripParser;
-import org.dnltsk.d2d.challenge.write.DbWriter;
+import org.dnltsk.d2d.challenge.write.DbManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.dnltsk.d2d.challenge.TestDataRepository.largeTestData;
 import static org.dnltsk.d2d.challenge.TestDataRepository.smallTestData;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
@@ -24,7 +23,7 @@ public class RequestHandlerTest {
     private TripParser parser;
 
     @Mock
-    private DbWriter writer;
+    private DbManager manager;
 
     @InjectMocks
     private RequestHandler requestHandler;
@@ -43,12 +42,12 @@ public class RequestHandlerTest {
     @Test
     public void small_csv_is_forwarded_to_writer() {
         requestHandler.handleTripsAsCsv(smallTestData);
-        verify(writer).insertTrip(any());
+        verify(manager).inserteTrips(any());
     }
 
     @Test
     public void large_csv_is_forwarded_in_chunks_to_writer() {
         requestHandler.handleTripsAsCsv(largeTestData);
-        verify(writer, times(10)).insertTrip(any());
+
     }
 }
