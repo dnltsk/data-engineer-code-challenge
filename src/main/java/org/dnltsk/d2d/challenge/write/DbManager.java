@@ -22,7 +22,7 @@ public class DbManager {
     @Autowired
     private DbWriter writer;
 
-    public void inserteTrips(List<Trip> trips) {
+    public void insertTrips(List<Trip> trips) {
 
         try (Connection conn = databasePool.openJdbcConnection()) {
 

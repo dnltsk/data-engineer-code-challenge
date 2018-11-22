@@ -27,7 +27,7 @@ public class RequestHandler {
             .toBlocking()
             .single();
 
-        dbManager.inserteTrips(trips);
+        dbManager.insertTrips(trips);
     }
 
 }

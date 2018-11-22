@@ -42,7 +42,7 @@ public class RequestHandlerTest {
     @Test
     public void small_csv_is_forwarded_to_writer() {
         requestHandler.handleTripsAsCsv(smallTestData);
-        verify(manager).inserteTrips(any());
+        verify(manager).insertTrips(any());
     }
 
     @Test

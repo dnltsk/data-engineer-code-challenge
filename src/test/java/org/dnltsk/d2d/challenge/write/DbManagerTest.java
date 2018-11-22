@@ -50,7 +50,7 @@ public class DbManagerTest {
             Trip.builder().region("region-bar").build(),
             Trip.builder().region("region-bar").build() // <- duplication
         );
-        manager.inserteTrips(trips);
+        manager.insertTrips(trips);
 
         ArgumentCaptor<List<String>> argument = ArgumentCaptor.forClass((Class<List<String>>) (Class) List.class);
         verify(writer).insertRegions(argument.capture(), any());
@@ -66,7 +66,7 @@ public class DbManagerTest {
             Trip.builder().datasource("ds-bar").build() // <- duplication
         );
 
-        manager.inserteTrips(trips);
+        manager.insertTrips(trips);
 
         ArgumentCaptor<List<String>> argument = ArgumentCaptor.forClass((Class<List<String>>) (Class) List.class);
         verify(writer).insertDatasources(argument.capture(), any());
@@ -79,7 +79,7 @@ public class DbManagerTest {
             .map(i -> Trip.builder().build())
             .toList().toBlocking().single();
 
-        manager.inserteTrips(lotsOfTrips);
+        manager.insertTrips(lotsOfTrips);
 
         verify(writer, times(4)).insertChunkOfTrips(any(), any());
     }
