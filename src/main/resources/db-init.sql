@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS public.trips;
-DROP TABLE IF EXISTS public.tiles_z_10;
+DROP TABLE IF EXISTS public.grid_cells;
 DROP TABLE IF EXISTS public.regions;
 DROP TABLE IF EXISTS public.datasources;
 
-CREATE TABLE IF NOT EXISTS public.tiles_z_10
+CREATE TABLE IF NOT EXISTS public.grid_cells
 (
     id serial,
     x integer NOT NULL,
@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS public.tiles_z_10
     PRIMARY KEY (id),
     UNIQUE (x, y)
 );
-SELECT AddGeometryColumn ('public', 'tiles_z_10', 'geom', 4326, 'POLYGON', 2);
-CREATE INDEX tiles_z_10_gix ON tiles_z_10 USING GIST (geom);
+SELECT AddGeometryColumn ('public', 'grid_cells', 'geom', 4326, 'POLYGON', 2);
+CREATE INDEX grid_cells_gix ON grid_cells USING GIST (geom);
 CREATE TABLE IF NOT EXISTS public.regions
 (
     id serial,
@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS public.trips
 (
     id bigserial,
     region_fk integer NOT NULL REFERENCES public.regions(id),
-    origin_tile_fk integer NOT NULL REFERENCES public.tiles_z_10(id),
-    destination_tile_fk integer NOT NULL REFERENCES public.tiles_z_10(id),
+    origin_tile_fk integer NOT NULL REFERENCES public.grid_cells(id),
+    destination_tile_fk integer NOT NULL REFERENCES public.grid_cells(id),
     datasource_fk integer NOT NULL REFERENCES public.datasources(id),
     datetime timestamptz NOT NULL,
     ingested_at timestamptz NOT NULL,

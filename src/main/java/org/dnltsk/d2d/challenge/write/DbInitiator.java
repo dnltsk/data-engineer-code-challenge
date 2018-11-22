@@ -38,7 +38,7 @@ public class DbInitiator {
     private void sanitizeDb(Connection conn) throws SQLException {
         conn.createStatement().executeUpdate("ALTER EXTENSION postgis UPDATE");
         conn.createStatement().executeUpdate("DROP TABLE IF EXISTS public.trips");
-        conn.createStatement().executeUpdate("DROP TABLE IF EXISTS public.tiles_z_10");
+        conn.createStatement().executeUpdate("DROP TABLE IF EXISTS public.grid_cells");
         conn.createStatement().executeUpdate("DROP TABLE IF EXISTS public.regions");
         conn.createStatement().executeUpdate("DROP TABLE IF EXISTS public.datasources");
     }
@@ -67,7 +67,7 @@ public class DbInitiator {
 
     private void createTiles(Connection conn) throws SQLException {
         conn.createStatement().executeUpdate(
-            "CREATE TABLE IF NOT EXISTS tiles_z_10\n" +
+            "CREATE TABLE IF NOT EXISTS grid_cells\n" +
                 "(\n" +
                 "    id serial,\n" +
                 "    x integer NOT NULL ,\n" +
@@ -77,10 +77,10 @@ public class DbInitiator {
                 ")"
         );
         conn.createStatement().executeQuery(
-            "SELECT AddGeometryColumn ('public', 'tiles_z_10', 'geom', 4326, 'POLYGON', 2)"
+            "SELECT AddGeometryColumn ('public', 'grid_cells', 'geom', 4326, 'POLYGON', 2)"
         );
         conn.createStatement().executeUpdate(
-            "CREATE INDEX tiles_z_10_gix ON tiles_z_10 USING GIST (geom)"
+            "CREATE INDEX grid_cells_gix ON grid_cells USING GIST (geom)"
         );
     }
 
@@ -90,8 +90,8 @@ public class DbInitiator {
                 "(\n" +
                 "    id bigserial,\n" +
                 "    region_fk integer NOT NULL REFERENCES public.regions(id),\n" +
-                "    origin_tile_fk integer NOT NULL REFERENCES public.tiles_z_10(id),\n" +
-                "    destination_tile_fk integer NOT NULL REFERENCES public.tiles_z_10(id),\n" +
+                "    origin_tile_fk integer NOT NULL REFERENCES public.grid_cells(id),\n" +
+                "    destination_tile_fk integer NOT NULL REFERENCES public.grid_cells(id),\n" +
                 "    datasource_fk integer NOT NULL REFERENCES public.datasources(id),\n" +
                 "    datetime timestamptz NOT NULL,\n" +
                 "    ingested_at timestamptz NOT NULL,\n" +
