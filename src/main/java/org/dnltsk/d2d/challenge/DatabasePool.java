@@ -39,14 +39,21 @@ public class DatabasePool {
         connectionProvider = new ConnectionProviderFromUrl(connectionUrl, user, pass);
     }
 
-    public Database openRxDatabase() {
-        return Database.from(connectionProvider);
-    }
-
+    /**
+     * opens a jdbc connection with deactivated autocommit
+     *
+     * @return Connection
+     * @throws SQLException
+     */
     public Connection openJdbcConnection() throws SQLException {
         Connection conn = DriverManager.getConnection(connectionUrl, user, pass);
         conn.setAutoCommit(false);
         return conn;
     }
+
+    public Database openRxDatabase() {
+        return Database.from(connectionProvider);
+    }
+
 
 }
