@@ -51,6 +51,8 @@ public class TripParserTest {
         assertThat(trip.getDestination().toText()).isEqualTo("POINT (14.43109483523328 50.04052930943246)");
         assertThat(trip.getDestinationGridCell()).isNotNull();
         assertThat(trip.getDatetime()).isEqualTo(Instant.parse("2018-05-28T09:03:40Z"));
+        assertThat(trip.getDayOfWeek()).isEqualTo(1); //monday
+        assertThat(trip.getHourOfDay()).isEqualTo(9);
         assertThat(trip.getDatasource()).isEqualTo("funny_car");
     }
 

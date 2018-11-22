@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS public.trips
     datasource_fk integer NOT NULL REFERENCES public.datasources(id),
     datetime timestamptz NOT NULL,
     ingested_at timestamptz NOT NULL,
-    weekday integer NOT NULL,
+    day_of_week integer NOT NULL,
     hour_of_day integer NOT NULL,
     PRIMARY KEY (id)
 );

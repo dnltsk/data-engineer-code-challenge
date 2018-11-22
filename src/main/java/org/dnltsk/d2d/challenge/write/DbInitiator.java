@@ -95,7 +95,7 @@ public class DbInitiator {
                 "    datasource_fk integer NOT NULL REFERENCES public.datasources(id),\n" +
                 "    datetime timestamptz NOT NULL,\n" +
                 "    ingested_at timestamptz NOT NULL,\n" +
-                "    weekday integer NOT NULL,\n" +
+                "    day_of_week integer NOT NULL,\n" +
                 "    hour_of_day integer NOT NULL,\n" +
                 "    PRIMARY KEY (id)\n" +
                 ")"
