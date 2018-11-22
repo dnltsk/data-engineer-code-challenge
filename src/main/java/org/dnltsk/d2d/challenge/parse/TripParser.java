@@ -13,6 +13,7 @@ import rx.Observable;
 import java.io.StringReader;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Arrays;
@@ -43,14 +44,18 @@ public class TripParser {
                     try {
                         Point origin = (Point) wktReader.read(csvRow[1]);
                         Point destination = (Point) wktReader.read(csvRow[2]);
+                        Instant datetime = formatter.parse(csvRow[3], Instant::from);
+                        ZonedDateTime zonedDatetime = datetime.atZone(ZoneId.of("UTC"));
                         return Trip.builder()
                             .region(csvRow[0].toLowerCase())
                             .origin(origin)
                             .originGridCell(gridCellCalculator.calcGridCell(origin))
                             .destination(destination)
                             .destinationGridCell(gridCellCalculator.calcGridCell(destination))
-                            .datetime(formatter.parse(csvRow[3], Instant::from))
                             .datasource(csvRow[4].toLowerCase())
+                            .datetime(datetime)
+                            .dayOfWeek(zonedDatetime.getDayOfWeek().getValue())
+                            .hourOfDay(zonedDatetime.getHour())
                             .build();
                     } catch (Exception e) {
                         log.error("Failed to parse csv row: " + Arrays.toString(csvRow), e);

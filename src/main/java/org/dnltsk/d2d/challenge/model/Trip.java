@@ -17,5 +17,7 @@ public class Trip {
     private GridCell destinationGridCell;
     private String datasource;
     private Instant datetime;
+    private Integer dayOfWeek;
+    private Integer hourOfDay;
 
 }
