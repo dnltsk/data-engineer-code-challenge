@@ -6,9 +6,11 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @TestConfiguration
 public class NoDbConfiguration {
@@ -21,8 +23,10 @@ public class NoDbConfiguration {
 
     @Bean
     @Primary
-    public DatabasePool mockDatabasePool(){
-        return mock(DatabasePool.class);
+    public DatabasePool mockDatabasePool() throws SQLException {
+        DatabasePool databasePool = mock(DatabasePool.class);
+        when(databasePool.openJdbcConnection()).thenReturn(mock(Connection.class));
+        return databasePool;
     }
 
     @Bean
