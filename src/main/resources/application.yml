@@ -1,6 +1,4 @@
-logging:
-  level:
-    root: INFO
+logging.level.root: INFO
 
 postgres:
   host: "localhost"
@@ -8,4 +6,3 @@ postgres:
   user: "postgres"
   pass: "postgres"
   dbname: "postgres"
-
