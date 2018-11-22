@@ -2,8 +2,11 @@ package org.dnltsk.d2d.challenge.parse;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.io.WKTReader;
 import lombok.extern.slf4j.Slf4j;
 import org.dnltsk.d2d.challenge.model.Trip;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rx.Observable;
 
@@ -13,10 +16,16 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Arrays;
+import java.util.Objects;
 
 @Service
 @Slf4j
 public class TripParser {
+
+    @Autowired
+    private GridCellCalculator gridCellCalculator;
+
+    private WKTReader wktReader = new WKTReader();
 
     private static final DateTimeFormatter formatter = new DateTimeFormatterBuilder()
         .appendPattern("yyyy-MM-dd HH:mm:ss")
@@ -25,21 +34,29 @@ public class TripParser {
 
     public Observable<Trip> parse(String tripsAsCsv) {
         CSVReader csvReader = new CSVReaderBuilder(new StringReader(tripsAsCsv))
-            .withSkipLines(1)
+            .withSkipLines(1) // skip csv header
             .build();
         return Observable
             .from(csvReader)
             .map(csvRow -> {
-                log.debug("parsing "+ Arrays.toString(csvRow));
-                return Trip.builder()
-                    .region(csvRow[0].toLowerCase())
-                    .originAsWkt(csvRow[1])
-                    .destinationAsWkt(csvRow[2])
-                    .datetime(formatter.parse(csvRow[3], Instant::from))
-                    .datasource(csvRow[4].toLowerCase())
-                    .build();
+                    log.debug("parsing " + Arrays.toString(csvRow));
+                    try {
+                        Point origin = (Point) wktReader.read(csvRow[1]);
+                        Point destination = (Point) wktReader.read(csvRow[2]);
+                        return Trip.builder()
+                            .region(csvRow[0].toLowerCase())
+                            .origin(origin)
+                            .originGridCell(gridCellCalculator.calcGridCell(origin))
+                            .destination(destination)
+                            .destinationGridCell(gridCellCalculator.calcGridCell(destination))
+                            .datetime(formatter.parse(csvRow[3], Instant::from))
+                            .datasource(csvRow[4].toLowerCase())
+                            .build();
+                    } catch (Exception e) {
+                        log.error("Failed to parse csv row: " + Arrays.toString(csvRow), e);
+                        return null;
+                    }
                 }
-            );
-
+            ).filter(Objects::nonNull);
     }
 }
