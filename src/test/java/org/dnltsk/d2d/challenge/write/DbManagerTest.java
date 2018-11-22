@@ -1,6 +1,7 @@
 package org.dnltsk.d2d.challenge.write;
 
 import org.dnltsk.d2d.challenge.DatabasePool;
+import org.dnltsk.d2d.challenge.model.GridCell;
 import org.dnltsk.d2d.challenge.model.Trip;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,6 +72,34 @@ public class DbManagerTest {
         ArgumentCaptor<List<String>> argument = ArgumentCaptor.forClass((Class<List<String>>) (Class) List.class);
         verify(writer).insertDatasources(argument.capture(), any());
         assertThat(argument.getValue()).containsExactly("ds-foo", "ds-bar");
+    }
+
+    @Test
+    public void distinct_gridCells_are_extracted() {
+        List<Trip> trips = Arrays.asList(
+            Trip.builder()
+                .originGridCell(GridCell.builder().xCenter(0).yCenter(0).build())
+                .destinationGridCell(GridCell.builder().xCenter(0).yCenter(0).build()) // <- duplicate
+                .build(),
+            Trip.builder()
+                .originGridCell(GridCell.builder().xCenter(1).yCenter(0).build())
+                .destinationGridCell(GridCell.builder().xCenter(0).yCenter(2).build())
+                .build(),
+            Trip.builder()
+                .originGridCell(GridCell.builder().xCenter(0).yCenter(2).build()) // <- duplicate
+                .destinationGridCell(GridCell.builder().xCenter(666).yCenter(666).build())
+                .build(),
+            Trip.builder()
+                .originGridCell(GridCell.builder().xCenter(111).yCenter(111).build())
+                .destinationGridCell(GridCell.builder().xCenter(1).yCenter(0).build()) // <- duplicate
+                .build()
+        );
+
+        manager.insertTrips(trips);
+
+        ArgumentCaptor<List<GridCell>> argument = ArgumentCaptor.forClass((Class<List<GridCell>>) (Class) List.class);
+        verify(writer).insertGridCells(argument.capture(), any());
+        assertThat(argument.getValue()).hasSize(5);
     }
 
     @Test
