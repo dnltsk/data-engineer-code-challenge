@@ -29,7 +29,7 @@ public class GridCellCalculator {
     private Polygon generateCellPolygon(int xCenter, int yCenter) throws ParseException {
         float xGeom = (float) xCenter * cellSize;
         float yGeom = (float) yCenter * cellSize;
-        float halfSize = (float) cellSize / 2.0f;
+        float halfSize = cellSize / 2.0f;
         String ll = (xGeom - halfSize) + " " + (yGeom - halfSize);
         String ul = (xGeom - halfSize) + " " + (yGeom + halfSize);
         String ur = (xGeom + halfSize) + " " + (yGeom + halfSize);
