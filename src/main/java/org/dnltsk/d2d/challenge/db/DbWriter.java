@@ -14,7 +14,6 @@ import java.util.List;
 public class DbWriter {
 
     public void insertRegions(List<String> regions, Connection conn) {
-        log.info("inserting regions: " + regions.toString());
         try {
             for (String region : regions) {
                 conn.createStatement().executeUpdate(
@@ -30,7 +29,6 @@ public class DbWriter {
     }
 
     public void insertDatasources(List<String> datasources, Connection conn) {
-        log.info("inserting datasources: " + datasources);
         try {
             for (String datasource : datasources) {
                 conn.createStatement().executeUpdate(
@@ -46,7 +44,6 @@ public class DbWriter {
     }
 
     public void insertGridCells(List<GridCell> gridCells, Connection conn) {
-        log.info("inserting gridCells: " + gridCells);
         try {
             for (GridCell gridCell: gridCells) {
                 conn.createStatement().executeUpdate(
@@ -64,8 +61,6 @@ public class DbWriter {
     }
 
     public void insertChunkOfTrips(List<Trip> trips, Connection conn) {
-        log.info("inserting trips: " + trips.size());
-
         for (Trip trip : trips) {
             log.debug("insert trip: " + trip);
             try {

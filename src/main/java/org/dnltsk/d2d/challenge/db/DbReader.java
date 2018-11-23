@@ -39,24 +39,6 @@ public class DbReader {
                     "GROUP BY \n" +
                     "   t.day_of_week, r.name");
 
-            log.info("SELECT DISTINCT \n" +
-                "   t.day_of_week, count(*) num\n" +
-                "FROM \n" +
-                "   public.trips t, public.regions r\n" +
-                "WHERE \n" +
-                "   t.region_fk = r.id\n" +
-                "   AND r.name = '"+statsRequest.getRegion()+"'\n" +
-                "   AND ST_Contains(\n" +
-                "       ST_GeomFromText('"+bboxWkt+"', 4326),\n" +
-                "       t.origin_geom\n" +
-                "   )\n" +
-                "   AND ST_Contains(\n" +
-                "       ST_GeomFromText('"+bboxWkt+"', 4326),\n" +
-                "       t.destination_geom\n" +
-                "   )\n" +
-                "GROUP BY \n" +
-                "   t.day_of_week, r.name");
-
             List<DailyStats> dailyStats = new ArrayList<>();
             while (resultSet.next()) {
                 dailyStats.add(

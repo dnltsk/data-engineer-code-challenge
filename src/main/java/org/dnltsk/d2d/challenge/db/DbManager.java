@@ -54,11 +54,13 @@ public class DbManager {
     public void insertTrips(List<Trip> trips) {
 
         try (Connection conn = databasePool.openJdbcConnection()) {
+            log.info("begin insert transaction: for " + trips.size() + " trips");
             insertDistinctRegions(trips, conn);
             insertDistinctDatasources(trips, conn);
             insertDistinctGridCells(trips, conn);
             insertTrips(trips, conn);
             conn.commit();
+            log.info("finished insert transaction");
         } catch (SQLException e) {
             log.error("failed to insert whole trips!", e);
         }
