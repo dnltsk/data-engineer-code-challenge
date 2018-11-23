@@ -87,4 +87,4 @@ http://localhost:8080
 * The fact that the actual use-case is not very clear leads to much freedom and -for sure- misunderstandings. 
   * "trips for an area" for instance: orig && dest within area? orig || dest within area? linestring(orig, dest) intersects area?
   * "status of ingestion" as well
-* I lost a lot of time trying to implement the database transactions in RxJava JDBC.
+* I lost a lot of time trying to implement the database transactions in RxJava JDBC. During time pressure I should focus on things I know, instead of trying out something new. 
