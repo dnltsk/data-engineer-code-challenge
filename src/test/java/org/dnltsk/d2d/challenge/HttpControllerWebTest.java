@@ -1,6 +1,6 @@
 package org.dnltsk.d2d.challenge;
 
-import org.dnltsk.d2d.challenge.model.Stats;
+import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class HttpControllerWebTest {
             + "&maxLat=0.0"
             + "&maxLon=0.0";
 
-        ResponseEntity<Stats> response = testRestTemplate.getForEntity("/stats" + query, Stats.class);
+        ResponseEntity<DailyStats> response = testRestTemplate.getForEntity("/stats" + query, DailyStats.class);
         assertThat(response.getStatusCode()).isEqualTo(OK);
         assertThat(response.getBody()).isNotNull();
     }

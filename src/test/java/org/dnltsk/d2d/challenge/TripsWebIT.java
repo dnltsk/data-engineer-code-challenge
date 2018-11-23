@@ -1,5 +1,7 @@
 package org.dnltsk.d2d.challenge;
 
+import org.dnltsk.d2d.challenge.model.DailyStats;
+import org.dnltsk.d2d.challenge.model.DailyStatsResponse;
 import org.dnltsk.d2d.challenge.write.DbInitiator;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -84,6 +87,23 @@ public class TripsWebIT {
             .isEqualTo(3);
         assertThat(numDatasources).as("number of datasources")
             .isEqualTo(5);
+    }
+
+    @Test
+    public void dailyStats_of_largeTestData_is_correct() throws SQLException {
+        testRestTemplate.postForEntity("/trips", TestDataRepository.largeTestData, Void.class);
+
+        String query = "?region=prague"
+            + "&minLat=0.0"
+            + "&minLon=0.0"
+            + "&maxLat=0.0"
+            + "&maxLon=0.0";
+        DailyStatsResponse response = testRestTemplate.getForObject("/stats" + query, DailyStatsResponse.class);
+
+        assertThat(response.getDailyStats()).hasSize(1);
+        DailyStats dailyStats = response.getDailyStats().get(0);
+        assertThat(dailyStats.getDayOfWeek()).isEqualTo(DayOfWeek.TUESDAY);
+        assertThat(dailyStats.getNumberOfTrips()).isEqualTo(1);
     }
 
     private int count(Connection conn, String query) throws SQLException {

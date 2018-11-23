@@ -1,8 +1,10 @@
 package org.dnltsk.d2d.challenge.write;
 
 import org.dnltsk.d2d.challenge.DatabasePool;
+import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.dnltsk.d2d.challenge.model.GridCell;
 import org.dnltsk.d2d.challenge.model.Trip;
+import org.dnltsk.d2d.challenge.read.DbReader;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +38,9 @@ public class DbManagerTest {
 
     @Mock
     private DbWriter writer;
+
+    @Mock
+    private DbReader reader;
 
     @Before
     public void setUp() throws SQLException {
@@ -112,4 +117,16 @@ public class DbManagerTest {
 
         verify(writer, times(4)).insertChunkOfTrips(any(), any());
     }
+
+    @Test
+    public void loaded_dailyStats_are_forwarded_untouched() {
+        List<DailyStats> dummyStats = Arrays.asList(new DailyStats(), new DailyStats());
+        when(reader.selectDailyStats(any())).thenReturn(dummyStats);
+
+        List<DailyStats> dailyStats = manager.loadDailyStats();
+
+        assertThat(dailyStats).isEqualTo(dummyStats);
+    }
+
+
 }

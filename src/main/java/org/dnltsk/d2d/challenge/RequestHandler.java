@@ -1,5 +1,7 @@
 package org.dnltsk.d2d.challenge;
 
+import org.dnltsk.d2d.challenge.model.DailyStats;
+import org.dnltsk.d2d.challenge.model.DailyStatsResponse;
 import org.dnltsk.d2d.challenge.model.Trip;
 import org.dnltsk.d2d.challenge.parse.TripParser;
 import org.dnltsk.d2d.challenge.write.DbManager;
@@ -17,17 +19,22 @@ public class RequestHandler {
     @Autowired
     private DbManager dbManager;
 
+    public DailyStatsResponse loadDailyStats() {
+        List<DailyStats> dailyStats = dbManager.loadDailyStats();
+        DailyStatsResponse response = new DailyStatsResponse();
+        response.setDailyStats(dailyStats);
+        return response;
+    }
+
     public void handleTripsAsCsv(String tripsAsCsv) {
 
         List<Trip> trips = parser.parse(tripsAsCsv)
-            .map(trip -> {
-                return trip;
-            })
             .toList()
             .toBlocking()
             .single();
 
         dbManager.insertTrips(trips);
+
     }
 
 }

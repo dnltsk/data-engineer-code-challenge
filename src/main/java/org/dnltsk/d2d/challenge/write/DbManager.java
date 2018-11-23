@@ -2,8 +2,10 @@ package org.dnltsk.d2d.challenge.write;
 
 import lombok.extern.slf4j.Slf4j;
 import org.dnltsk.d2d.challenge.DatabasePool;
+import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.dnltsk.d2d.challenge.model.GridCell;
 import org.dnltsk.d2d.challenge.model.Trip;
+import org.dnltsk.d2d.challenge.read.DbReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rx.Observable;
@@ -12,6 +14,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -32,9 +35,21 @@ public class DbManager {
     @Autowired
     private DbWriter writer;
 
+    @Autowired
+    private DbReader reader;
+
     public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
         Set<Object> seen = ConcurrentHashMap.newKeySet();
         return t -> seen.add(keyExtractor.apply(t));
+    }
+
+    public List<DailyStats> loadDailyStats() {
+        try (Connection conn = databasePool.openJdbcConnection()) {
+            return reader.selectDailyStats(conn);
+        } catch (SQLException e) {
+            log.error("failed to load daily stats", e);
+            return Collections.emptyList();
+        }
     }
 
     public void insertTrips(List<Trip> trips) {

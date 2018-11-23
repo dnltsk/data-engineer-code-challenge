@@ -1,5 +1,7 @@
 package org.dnltsk.d2d.challenge;
 
+import org.dnltsk.d2d.challenge.model.DailyStats;
+import org.dnltsk.d2d.challenge.model.DailyStatsResponse;
 import org.dnltsk.d2d.challenge.parse.TripParser;
 import org.dnltsk.d2d.challenge.write.DbManager;
 import org.junit.Before;
@@ -11,22 +13,26 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.dnltsk.d2d.challenge.TestDataRepository.largeTestData;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.dnltsk.d2d.challenge.TestDataRepository.smallTestData;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 public class RequestHandlerTest {
+
+    @InjectMocks
+    private RequestHandler requestHandler;
 
     @Spy
     private TripParser parser;
 
     @Mock
     private DbManager manager;
-
-    @InjectMocks
-    private RequestHandler requestHandler;
 
     @Before
     public void setUp() throws Exception {
@@ -46,8 +52,12 @@ public class RequestHandlerTest {
     }
 
     @Test
-    public void large_csv_is_forwarded_in_chunks_to_writer() {
-        requestHandler.handleTripsAsCsv(largeTestData);
+    public void loaded_dailyStats_are_wrapped_into_a_response_object() {
+        List<DailyStats> dummyStats = Arrays.asList(new DailyStats(), new DailyStats());
+        when(manager.loadDailyStats()).thenReturn(dummyStats);
 
+        DailyStatsResponse dailyStatsResponse = requestHandler.loadDailyStats();
+
+        assertThat(dailyStatsResponse.getDailyStats()).isEqualTo(dummyStats);
     }
 }
