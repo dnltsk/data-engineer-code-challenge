@@ -67,24 +67,23 @@ http://localhost:8080
 
 ![erd](misc/erd.png "erd")
 
-(created with _DbVisualizer_)
+_(created with DbVisualizer)_
 
 #### debug / preview with QGIS
 
 ![erd](misc/qgis-screenshot.png "erd")
 
-(created with _QGIS_)
+_(created with QGIS)_
 
 #### AWS environment proposal
 
 ![aws architecture sketch](misc/aws-architecture-sketch.png "aws architecture sketch")
 
-(created with _lucidchart_)
-
+_(created with lucidchart)_
 
 #### what I've learned
 
-* The fact that the actual use-case is not very clear leads to much freedom and -for sure- misunderstandings. 
+* The fact that the actual use-case is not very clear leads to much freedom and -of course- assumptions and misunderstandings. 
   * "trips for an area" for instance: orig && dest within area? orig || dest within area? linestring(orig, dest) intersects area?
   * "status of ingestion" as well
 * I lost a lot of time trying to implement the database transactions in RxJava JDBC. During time pressure I should focus on things I know, instead of trying out something new. 
