@@ -29,7 +29,9 @@ public class HttpController {
     @ApiOperation(value = "post new trips as csv")
     @PostMapping("/trips")
     public ResponseEntity<Void> postTrips(
-        @ApiParam(name = "tripsAsCsv", value = "csv to upload.<ul><li>header like 'region,origin_coord,destination_coord,datetime,datasource' is expected</li><li>first row is getting ignored</li></ul>")
+        @ApiParam(name = "tripsAsCsv", value = "csv to upload." +
+            "\n\nheader is expected (first row is getting ignored)." +
+            "\n\nsee sample csv at https://github.com/dnltsk/data-engineer-code-challenge/blob/master/trips.csv")
         @RequestBody String tripsAsCsv
     ) throws URISyntaxException {
         requestHandler.handleTripsAsCsv(tripsAsCsv);
@@ -49,20 +51,20 @@ public class HttpController {
 
     @ApiOperation(value = "get statistics")
     @GetMapping("/stats")
-    public ResponseEntity<DailyStatsResponse> postTrips(
+    public ResponseEntity<DailyStatsResponse> getStats(
         @ApiParam(name = "region", value = "region to filter (case-insensitive)", defaultValue = "prague")
         @RequestParam String region,
-        @ApiParam(name = "minLat", value = "minLat/minY of bbox filter", defaultValue = "52.0")
+        @ApiParam(name = "minLat", value = "minLat/minY of bbox filter", defaultValue = "53.0")
         @RequestParam Float minLat,
-        @ApiParam(name = "minLon", value = "minLon/minX of bbox filter", defaultValue = "13.0")
+        @ApiParam(name = "minLon", value = "minLon/minX of bbox filter", defaultValue = "10.0")
         @RequestParam Float minLon,
-        @ApiParam(name = "maxLat", value = "maxLat/maxY of bbox filter", defaultValue = "53.0")
+        @ApiParam(name = "maxLat", value = "maxLat/maxY of bbox filter", defaultValue = "54.0")
         @RequestParam Float maxLat,
-        @ApiParam(name = "maxLon", value = "maxLon/maxX of bbox filter", defaultValue = "14.0")
+        @ApiParam(name = "maxLon", value = "maxLon/maxX of bbox filter", defaultValue = "11.0")
         @RequestParam Float maxLon
     ) throws ParseException {
         StatsRequest statsRequest = StatsRequest.builder()
-            .region(region)
+            .region(region.toLowerCase())
             .bbox(bboxConverter.convert(minLat, minLon, maxLat, maxLon))
             .build();
         return ResponseEntity.ok(requestHandler.loadDailyStats(statsRequest));
