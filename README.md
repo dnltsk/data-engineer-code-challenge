@@ -24,9 +24,11 @@ for IDE:
 
 test: `./gradlew clean test`
 
+integration test: `./gradlew clean integrationTest` :warning: depends on a running Postgres instance, see `applications.yml`
+
 build: `./gradlew clean build`
 
-start: `./gradlew clean bootRun` :warning: requires a running Postgres instance, see `applications.yml`
+start: `./gradlew clean bootRun` :warning: depends on a running Postgres instance, see `applications.yml`
 
 
 ## start containerized environment
