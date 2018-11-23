@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS public.trips
 (
     id bigserial,
     region_fk integer NOT NULL REFERENCES public.regions(id),
-    origin_tile_fk integer NOT NULL REFERENCES public.grid_cells(id),
-    destination_tile_fk integer NOT NULL REFERENCES public.grid_cells(id),
+    origin_cell_fk integer NOT NULL REFERENCES public.grid_cells(id),
+    destination_cell_fk integer NOT NULL REFERENCES public.grid_cells(id),
     datasource_fk integer NOT NULL REFERENCES public.datasources(id),
     datetime timestamptz NOT NULL,
     ingested_at timestamptz NOT NULL,

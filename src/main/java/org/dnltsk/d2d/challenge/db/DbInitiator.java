@@ -22,7 +22,7 @@ public class DbInitiator {
             sanitizeDb(conn);
             createRegions(conn);
             createDatasources(conn);
-            createTiles(conn);
+            createCells(conn);
             createTrips(conn);
             conn.commit();
             log.info("resetDb.. done!");
@@ -64,7 +64,7 @@ public class DbInitiator {
         );
     }
 
-    private void createTiles(Connection conn) throws SQLException {
+    private void createCells(Connection conn) throws SQLException {
         conn.createStatement().executeUpdate(
             "CREATE TABLE IF NOT EXISTS grid_cells\n" +
                 "(\n" +
@@ -89,8 +89,8 @@ public class DbInitiator {
                 "(\n" +
                 "    id bigserial,\n" +
                 "    region_fk integer NOT NULL REFERENCES public.regions(id),\n" +
-                "    origin_tile_fk integer NOT NULL REFERENCES public.grid_cells(id),\n" +
-                "    destination_tile_fk integer NOT NULL REFERENCES public.grid_cells(id),\n" +
+                "    origin_cell_fk integer NOT NULL REFERENCES public.grid_cells(id),\n" +
+                "    destination_cell_fk integer NOT NULL REFERENCES public.grid_cells(id),\n" +
                 "    datasource_fk integer NOT NULL REFERENCES public.datasources(id),\n" +
                 "    datetime timestamptz NOT NULL,\n" +
                 "    ingested_at timestamptz NOT NULL,\n" +
