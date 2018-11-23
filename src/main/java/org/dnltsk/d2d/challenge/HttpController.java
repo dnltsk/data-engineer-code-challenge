@@ -55,7 +55,7 @@ public class HttpController {
         @ApiParam(name = "maxLon", value = "maxLon/maxX of bbox filter", defaultValue = "14.0")
         @RequestParam Float maxLon
     ) {
-        return ResponseEntity.ok(requestHandler.loadDailyStats());
+        return ResponseEntity.ok(requestHandler.loadDailyStats(region));
     }
 
 }

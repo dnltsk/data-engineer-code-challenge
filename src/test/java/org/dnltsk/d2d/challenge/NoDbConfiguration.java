@@ -1,5 +1,6 @@
 package org.dnltsk.d2d.challenge;
 
+import org.dnltsk.d2d.challenge.read.DbReader;
 import org.dnltsk.d2d.challenge.write.DbInitiator;
 import org.dnltsk.d2d.challenge.write.DbWriter;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -33,6 +34,12 @@ public class NoDbConfiguration {
     @Primary
     public DbWriter mockDbWriter(){
         return mock(DbWriter.class);
+    }
+
+    @Bean
+    @Primary
+    public DbReader mockDbReader(){
+        return mock(DbReader.class);
     }
 
 }

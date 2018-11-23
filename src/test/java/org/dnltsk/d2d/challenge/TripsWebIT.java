@@ -100,9 +100,14 @@ public class TripsWebIT {
             + "&maxLon=0.0";
         DailyStatsResponse response = testRestTemplate.getForObject("/stats" + query, DailyStatsResponse.class);
 
-        assertThat(response.getDailyStats()).hasSize(1);
+        assertThat(response.getDailyStats()).hasSize(2);
+
         DailyStats dailyStats = response.getDailyStats().get(0);
-        assertThat(dailyStats.getDayOfWeek()).isEqualTo(DayOfWeek.TUESDAY);
+        assertThat(dailyStats.getDayOfWeek()).isEqualTo(DayOfWeek.MONDAY);
+        assertThat(dailyStats.getNumberOfTrips()).isEqualTo(1);
+
+        dailyStats = response.getDailyStats().get(1);
+        assertThat(dailyStats.getDayOfWeek()).isEqualTo(DayOfWeek.FRIDAY);
         assertThat(dailyStats.getNumberOfTrips()).isEqualTo(1);
     }
 

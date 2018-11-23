@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class DbReader {
 
-    public List<DailyStats> selectDailyStats(Connection conn) {
+    public List<DailyStats> selectDailyStats(Connection conn, String region) {
         try {
             ResultSet resultSet = conn.createStatement().executeQuery(
                 "SELECT DISTINCT \n" +
@@ -25,13 +25,13 @@ public class DbReader {
                     "   public.trips t, public.regions r\n" +
                     "WHERE \n" +
                     "   t.region_fk = r.id\n" +
-                    "   AND r.name = 'prague'\n" +
+                    "   AND r.name = '"+region+"'\n" +
                     "   AND ST_Contains(\n" +
-                    "       ST_GeomFromText('POLYGON((14.45 49.95,14.45 50.05,14.55 50.05,14.55 49.95,14.45 49.95))', 4326),\n" +
+                    "       ST_GeomFromText('POLYGON((10.15 53.45,10.15 53.55,10.25 53.55,10.25 53.45,10.15 53.45))', 4326),\n" +
                     "       t.origin_geom\n" +
                     "   )\n" +
                     "   AND ST_Contains(\n" +
-                    "       ST_GeomFromText('POLYGON((14.45 49.95,14.45 50.05,14.55 50.05,14.55 49.95,14.45 49.95))', 4326),\n" +
+                    "       ST_GeomFromText('POLYGON((10.15 53.45,10.15 53.55,10.25 53.55,10.25 53.45,10.15 53.45))', 4326),\n" +
                     "       t.destination_geom\n" +
                     "   )\n" +
                     "GROUP BY \n" +

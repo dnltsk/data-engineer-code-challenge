@@ -19,8 +19,8 @@ public class RequestHandler {
     @Autowired
     private DbManager dbManager;
 
-    public DailyStatsResponse loadDailyStats() {
-        List<DailyStats> dailyStats = dbManager.loadDailyStats();
+    public DailyStatsResponse loadDailyStats(String region) {
+        List<DailyStats> dailyStats = dbManager.loadDailyStats(region);
         DailyStatsResponse response = new DailyStatsResponse();
         response.setDailyStats(dailyStats);
         return response;

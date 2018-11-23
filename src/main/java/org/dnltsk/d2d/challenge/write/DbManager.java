@@ -43,9 +43,9 @@ public class DbManager {
         return t -> seen.add(keyExtractor.apply(t));
     }
 
-    public List<DailyStats> loadDailyStats() {
+    public List<DailyStats> loadDailyStats(String region) {
         try (Connection conn = databasePool.openJdbcConnection()) {
-            return reader.selectDailyStats(conn);
+            return reader.selectDailyStats(conn, region);
         } catch (SQLException e) {
             log.error("failed to load daily stats", e);
             return Collections.emptyList();

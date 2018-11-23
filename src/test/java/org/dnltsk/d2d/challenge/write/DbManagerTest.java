@@ -121,9 +121,9 @@ public class DbManagerTest {
     @Test
     public void loaded_dailyStats_are_forwarded_untouched() {
         List<DailyStats> dummyStats = Arrays.asList(new DailyStats(), new DailyStats());
-        when(reader.selectDailyStats(any())).thenReturn(dummyStats);
+        when(reader.selectDailyStats(any(), any())).thenReturn(dummyStats);
 
-        List<DailyStats> dailyStats = manager.loadDailyStats();
+        List<DailyStats> dailyStats = manager.loadDailyStats("dummy-region");
 
         assertThat(dailyStats).isEqualTo(dummyStats);
     }

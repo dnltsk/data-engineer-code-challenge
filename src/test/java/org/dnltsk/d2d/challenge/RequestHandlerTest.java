@@ -54,9 +54,9 @@ public class RequestHandlerTest {
     @Test
     public void loaded_dailyStats_are_wrapped_into_a_response_object() {
         List<DailyStats> dummyStats = Arrays.asList(new DailyStats(), new DailyStats());
-        when(manager.loadDailyStats()).thenReturn(dummyStats);
+        when(manager.loadDailyStats("dummy-region")).thenReturn(dummyStats);
 
-        DailyStatsResponse dailyStatsResponse = requestHandler.loadDailyStats();
+        DailyStatsResponse dailyStatsResponse = requestHandler.loadDailyStats("dummy-region");
 
         assertThat(dailyStatsResponse.getDailyStats()).isEqualTo(dummyStats);
     }
