@@ -94,10 +94,10 @@ public class TripsWebIT {
         testRestTemplate.postForEntity("/trips", TestDataRepository.largeTestData, Void.class);
 
         String query = "?region=prague"
-            + "&minLat=0.0"
-            + "&minLon=0.0"
-            + "&maxLat=0.0"
-            + "&maxLon=0.0";
+            + "&minLat=53.45"
+            + "&minLon=10.15"
+            + "&maxLat=53.55"
+            + "&maxLon=10.25";
         DailyStatsResponse response = testRestTemplate.getForObject("/stats" + query, DailyStatsResponse.class);
 
         assertThat(response.getDailyStats()).hasSize(2);

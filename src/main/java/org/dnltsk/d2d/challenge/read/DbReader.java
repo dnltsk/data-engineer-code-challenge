@@ -19,6 +19,7 @@ public class DbReader {
 
     public List<DailyStats> selectDailyStats(Connection conn, StatsRequest statsRequest) {
         try {
+            String bboxWkt = statsRequest.getBbox().toText();
             ResultSet resultSet = conn.createStatement().executeQuery(
                 "SELECT DISTINCT \n" +
                     "   t.day_of_week, count(*) num\n" +
@@ -28,15 +29,33 @@ public class DbReader {
                     "   t.region_fk = r.id\n" +
                     "   AND r.name = '"+statsRequest.getRegion()+"'\n" +
                     "   AND ST_Contains(\n" +
-                    "       ST_GeomFromText('POLYGON((10.15 53.45,10.15 53.55,10.25 53.55,10.25 53.45,10.15 53.45))', 4326),\n" +
+                    "       ST_GeomFromText('"+bboxWkt+"', 4326),\n" +
                     "       t.origin_geom\n" +
                     "   )\n" +
                     "   AND ST_Contains(\n" +
-                    "       ST_GeomFromText('POLYGON((10.15 53.45,10.15 53.55,10.25 53.55,10.25 53.45,10.15 53.45))', 4326),\n" +
+                    "       ST_GeomFromText('"+bboxWkt+"', 4326),\n" +
                     "       t.destination_geom\n" +
                     "   )\n" +
                     "GROUP BY \n" +
                     "   t.day_of_week, r.name");
+
+            log.info("SELECT DISTINCT \n" +
+                "   t.day_of_week, count(*) num\n" +
+                "FROM \n" +
+                "   public.trips t, public.regions r\n" +
+                "WHERE \n" +
+                "   t.region_fk = r.id\n" +
+                "   AND r.name = '"+statsRequest.getRegion()+"'\n" +
+                "   AND ST_Contains(\n" +
+                "       ST_GeomFromText('"+bboxWkt+"', 4326),\n" +
+                "       t.origin_geom\n" +
+                "   )\n" +
+                "   AND ST_Contains(\n" +
+                "       ST_GeomFromText('"+bboxWkt+"', 4326),\n" +
+                "       t.destination_geom\n" +
+                "   )\n" +
+                "GROUP BY \n" +
+                "   t.day_of_week, r.name");
 
             List<DailyStats> dailyStats = new ArrayList<>();
             while (resultSet.next()) {

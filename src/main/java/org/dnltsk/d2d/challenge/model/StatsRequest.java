@@ -1,5 +1,6 @@
 package org.dnltsk.d2d.challenge.model;
 
+import com.vividsolutions.jts.geom.Polygon;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,5 +9,6 @@ import lombok.Data;
 public class StatsRequest {
 
     private String region;
+    private Polygon bbox;
 
 }

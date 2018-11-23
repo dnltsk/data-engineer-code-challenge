@@ -1,9 +1,11 @@
 package org.dnltsk.d2d.challenge;
 
+import com.vividsolutions.jts.io.ParseException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.dnltsk.d2d.challenge.model.DailyStatsResponse;
 import org.dnltsk.d2d.challenge.model.StatsRequest;
+import org.dnltsk.d2d.challenge.parse.BboxConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,9 @@ public class HttpController {
 
     @Autowired
     private RequestHandler requestHandler;
+
+    @Autowired
+    private BboxConverter bboxConverter;
 
     @ApiOperation(value = "post new trips as csv")
     @PostMapping("/trips")
@@ -55,9 +60,10 @@ public class HttpController {
         @RequestParam Float maxLat,
         @ApiParam(name = "maxLon", value = "maxLon/maxX of bbox filter", defaultValue = "14.0")
         @RequestParam Float maxLon
-    ) {
+    ) throws ParseException {
         StatsRequest statsRequest = StatsRequest.builder()
             .region(region)
+            .bbox(bboxConverter.convert(minLat, minLon, maxLat, maxLon))
             .build();
         return ResponseEntity.ok(requestHandler.loadDailyStats(statsRequest));
     }
