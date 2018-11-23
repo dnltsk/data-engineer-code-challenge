@@ -66,7 +66,7 @@ public class DbWriter {
             try {
                 conn.createStatement().executeUpdate(
                     "INSERT INTO public.trips(\n" +
-                        "  region_fk, origin_tile_fk, destination_tile_fk, datasource_fk, datetime, ingested_at, day_of_week, hour_of_day, origin_geom, destination_geom)\n" +
+                        "  region_fk, origin_cell_fk, destination_cell_fk, datasource_fk, datetime, ingested_at, day_of_week, hour_of_day, origin_geom, destination_geom)\n" +
                         "VALUES (\n" +
                         "    (SELECT id FROM public.regions WHERE name = 'prague'),\n" +
                         "    (SELECT id FROM public.grid_cells WHERE x = "+trip.getOriginGridCell().getXCenter()+" AND y = "+trip.getOriginGridCell().getYCenter()+"),\n" +
