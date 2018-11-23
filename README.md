@@ -51,9 +51,9 @@ http://localhost:8080
   * ERD and map from QGIS is listed below
 * :green_heart: calculate statistics based on region and bbox
   * /stats?region=prague&minLat=53&minLon=10&maxLat=54&maxLon=11 responds with a list of daily stats (number of trips per weekday)
-* :red_heart: status of data ingestion
+* :heart: status of data ingestion
   * not finished. I wanted to visualize the ingestion state on a dashboard (Grafana, Graphite, Statsd), but didn't finished yet
-* :red_heart: solution should be scalable
+* :heart: solution should be scalable
   * failed by design (ingestion via post), an event based solution would make much more sense so solve this
 * :green_heart: programming language and database
   * I used Java and Postgres/PostGIS. 
