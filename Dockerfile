@@ -5,10 +5,10 @@
 #
 #
 # BUILD
-#   docker build . -t mfs-broker
+#   docker build . -t d2d.challenge
 #
 # RUN
-#   docker run -it -p 8715:8715 -e PROFILE=ece.test mfs-broker
+#   docker run -it -p 8080:8080 -e d2d.challenge
 #
 
 FROM alpine:3.8
