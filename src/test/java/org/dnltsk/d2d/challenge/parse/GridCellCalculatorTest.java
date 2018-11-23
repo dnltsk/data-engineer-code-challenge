@@ -4,13 +4,31 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import org.dnltsk.d2d.challenge.model.GridCell;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
+@RunWith(SpringRunner.class)
 public class GridCellCalculatorTest {
 
-    private GridCellCalculator calculator = new GridCellCalculator();
+    @InjectMocks
+    private GridCellCalculator calculator;
+
+    @Mock
+    private BboxConverter converter;
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void center_and_geom_of_x_0_y_0_is_calculated_correctly() throws ParseException {
@@ -20,7 +38,16 @@ public class GridCellCalculatorTest {
 
         assertThat(gridCell.getXCenter()).isEqualTo(0);
         assertThat(gridCell.getYCenter()).isEqualTo(0);
-        assertThat(gridCell.getGeom().toText()).isEqualTo("POLYGON ((-0.05 -0.05, -0.05 0.05, 0.05 0.05, 0.05 -0.05, -0.05 -0.05))");
+
+        ArgumentCaptor<Float> minLat = ArgumentCaptor.forClass(Float.class);
+        ArgumentCaptor<Float> minLon = ArgumentCaptor.forClass(Float.class);
+        ArgumentCaptor<Float> maxLat = ArgumentCaptor.forClass(Float.class);
+        ArgumentCaptor<Float> maxLon = ArgumentCaptor.forClass(Float.class);
+        verify(converter).convert(minLat.capture(), minLon.capture(), maxLat.capture(), maxLon.capture());
+        assertThat(minLat.getValue()).isEqualTo(-0.05f);
+        assertThat(minLon.getValue()).isEqualTo(-0.05f);
+        assertThat(maxLat.getValue()).isEqualTo(0.05f);
+        assertThat(maxLon.getValue()).isEqualTo(0.05f);
     }
 
     @Test
@@ -31,7 +58,16 @@ public class GridCellCalculatorTest {
 
         assertThat(gridCell.getXCenter()).isEqualTo(23);
         assertThat(gridCell.getYCenter()).isEqualTo(23);
-        assertThat(gridCell.getGeom().toText()).isEqualTo("POLYGON ((2.25 2.25, 2.25 2.35, 2.35 2.35, 2.35 2.25, 2.25 2.25))");
+
+        ArgumentCaptor<Float> minLat = ArgumentCaptor.forClass(Float.class);
+        ArgumentCaptor<Float> minLon = ArgumentCaptor.forClass(Float.class);
+        ArgumentCaptor<Float> maxLat = ArgumentCaptor.forClass(Float.class);
+        ArgumentCaptor<Float> maxLon = ArgumentCaptor.forClass(Float.class);
+        verify(converter).convert(minLat.capture(), minLon.capture(), maxLat.capture(), maxLon.capture());
+        assertThat(minLat.getValue()).isEqualTo(2.25f);
+        assertThat(minLon.getValue()).isEqualTo(2.25f);
+        assertThat(maxLat.getValue()).isEqualTo(2.35f);
+        assertThat(maxLon.getValue()).isEqualTo(2.35f);
     }
 
     @Test
@@ -42,6 +78,16 @@ public class GridCellCalculatorTest {
 
         assertThat(gridCell.getXCenter()).isEqualTo(-23);
         assertThat(gridCell.getYCenter()).isEqualTo(-23);
-        assertThat(gridCell.getGeom().toText()).isEqualTo("POLYGON ((-2.35 -2.35, -2.35 -2.25, -2.25 -2.25, -2.25 -2.35, -2.35 -2.35))");
+
+        ArgumentCaptor<Float> minLat = ArgumentCaptor.forClass(Float.class);
+        ArgumentCaptor<Float> minLon = ArgumentCaptor.forClass(Float.class);
+        ArgumentCaptor<Float> maxLat = ArgumentCaptor.forClass(Float.class);
+        ArgumentCaptor<Float> maxLon = ArgumentCaptor.forClass(Float.class);
+        verify(converter).convert(minLat.capture(), minLon.capture(), maxLat.capture(), maxLon.capture());
+        assertThat(minLat.getValue()).isEqualTo(-2.35f);
+        assertThat(minLon.getValue()).isEqualTo(-2.35f);
+        assertThat(maxLat.getValue()).isEqualTo(-2.25f);
+        assertThat(maxLon.getValue()).isEqualTo(-2.25f);
     }
+
 }
