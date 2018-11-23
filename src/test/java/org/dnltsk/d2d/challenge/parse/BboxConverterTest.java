@@ -17,7 +17,7 @@ public class BboxConverterTest {
         Float maxLat = 53.55f;
         Float maxLon = 10.25f;
 
-        Polygon polygon = converter.convert(minLat, minLon, maxLat, maxLon);
+        Polygon polygon = converter.convert(minLon, minLat, maxLon, maxLat);
 
         assertThat(polygon.toText()).isEqualTo("POLYGON ((10.15 53.45, 10.15 53.55, 10.25 53.55, 10.25 53.45, 10.15 53.45))");
     }

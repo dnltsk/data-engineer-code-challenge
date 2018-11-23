@@ -33,8 +33,8 @@ public class GridCellCalculator {
         float yGeom = (float) yCenter * cellSize;
         float halfSize = cellSize / 2.0f;
         return bboxConverter.convert(
-            (yGeom - halfSize),
             (xGeom - halfSize),
+            (yGeom - halfSize),
             (xGeom + halfSize),
             (yGeom + halfSize)
         );

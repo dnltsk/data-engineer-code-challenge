@@ -65,7 +65,7 @@ public class HttpController {
     ) throws ParseException {
         StatsRequest statsRequest = StatsRequest.builder()
             .region(region.toLowerCase())
-            .bbox(bboxConverter.convert(minLat, minLon, maxLat, maxLon))
+            .bbox(bboxConverter.convert(minLon, minLat, maxLon, maxLat))
             .build();
         return ResponseEntity.ok(requestHandler.loadDailyStats(statsRequest));
     }

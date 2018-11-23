@@ -10,7 +10,7 @@ public class BboxConverter {
 
     private WKTReader wktReader = new WKTReader();
 
-    public Polygon convert(Float minLat, Float minLon, Float maxLat, Float maxLon) throws ParseException {
+    public Polygon convert(Float minLon, Float minLat, Float maxLon, Float maxLat) throws ParseException {
         String ll = minLon + " " + minLat;
         String ul = minLon + " " + maxLat;
         String ur = maxLon + " " + maxLat;
