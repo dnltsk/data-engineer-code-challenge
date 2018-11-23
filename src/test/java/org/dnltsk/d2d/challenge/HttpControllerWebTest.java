@@ -40,4 +40,22 @@ public class HttpControllerWebTest {
         assertThat(response.getStatusCode()).isEqualTo(OK);
         assertThat(response.getBody()).isNotNull();
     }
+
+    @Test
+    public void actuator_metrics_endpoint_is_available() {
+        ResponseEntity<Void> response = testRestTemplate.getForEntity("/actuator/metrics" , Void.class);
+        assertThat(response.getStatusCode()).isEqualTo(OK);
+    }
+
+    @Test
+    public void actuator_info_endpoint_is_available() {
+        ResponseEntity<Void> response = testRestTemplate.getForEntity("/actuator/info" , Void.class);
+        assertThat(response.getStatusCode()).isEqualTo(OK);
+    }
+
+    @Test
+    public void actuator_health_endpoint_is_available() {
+        ResponseEntity<Void> response = testRestTemplate.getForEntity("/actuator/health" , Void.class);
+        assertThat(response.getStatusCode()).isEqualTo(OK);
+    }
 }
