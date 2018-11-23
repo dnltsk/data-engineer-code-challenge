@@ -6,23 +6,32 @@
 
 ## Requirements
 
-to build and run locally:
+to build & run locally:
 
 * JDK & JRE >= 1.8
 * Postgres 9 + PostGIS service
+
+to build & run containerized environment:
+
+* docker
+* docker-compose
 
 for IDE:
 
 * Lombok plugin
 
-## build
+## test, build, start
 
-`./gradlew clean build`
+test: `./gradlew clean test`
 
-## start
+build: `./gradlew clean build`
 
-`./gradlew clean bootRun`
+start: `./gradlew clean bootRun` :warning: requires a running Postgres instance, see `applications.yml`
 
+
+## start containerized environment
+
+`docker-compose up` :warning: depends on build (see above), no Postgres required.
 
 ## accessing
 
