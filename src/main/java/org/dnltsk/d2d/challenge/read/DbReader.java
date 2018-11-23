@@ -2,6 +2,7 @@ package org.dnltsk.d2d.challenge.read;
 
 import lombok.extern.slf4j.Slf4j;
 import org.dnltsk.d2d.challenge.model.DailyStats;
+import org.dnltsk.d2d.challenge.model.StatsRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -16,7 +17,7 @@ import java.util.List;
 @Service
 public class DbReader {
 
-    public List<DailyStats> selectDailyStats(Connection conn, String region) {
+    public List<DailyStats> selectDailyStats(Connection conn, StatsRequest statsRequest) {
         try {
             ResultSet resultSet = conn.createStatement().executeQuery(
                 "SELECT DISTINCT \n" +
@@ -25,7 +26,7 @@ public class DbReader {
                     "   public.trips t, public.regions r\n" +
                     "WHERE \n" +
                     "   t.region_fk = r.id\n" +
-                    "   AND r.name = '"+region+"'\n" +
+                    "   AND r.name = '"+statsRequest.getRegion()+"'\n" +
                     "   AND ST_Contains(\n" +
                     "       ST_GeomFromText('POLYGON((10.15 53.45,10.15 53.55,10.25 53.55,10.25 53.45,10.15 53.45))', 4326),\n" +
                     "       t.origin_geom\n" +

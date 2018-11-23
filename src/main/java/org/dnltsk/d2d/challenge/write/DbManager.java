@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dnltsk.d2d.challenge.DatabasePool;
 import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.dnltsk.d2d.challenge.model.GridCell;
+import org.dnltsk.d2d.challenge.model.StatsRequest;
 import org.dnltsk.d2d.challenge.model.Trip;
 import org.dnltsk.d2d.challenge.read.DbReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,9 @@ public class DbManager {
         return t -> seen.add(keyExtractor.apply(t));
     }
 
-    public List<DailyStats> loadDailyStats(String region) {
+    public List<DailyStats> loadDailyStats(StatsRequest statsRequest) {
         try (Connection conn = databasePool.openJdbcConnection()) {
-            return reader.selectDailyStats(conn, region);
+            return reader.selectDailyStats(conn, statsRequest);
         } catch (SQLException e) {
             log.error("failed to load daily stats", e);
             return Collections.emptyList();

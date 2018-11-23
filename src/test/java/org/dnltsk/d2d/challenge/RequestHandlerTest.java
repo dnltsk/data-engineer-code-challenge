@@ -2,6 +2,7 @@ package org.dnltsk.d2d.challenge;
 
 import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.dnltsk.d2d.challenge.model.DailyStatsResponse;
+import org.dnltsk.d2d.challenge.model.StatsRequest;
 import org.dnltsk.d2d.challenge.parse.TripParser;
 import org.dnltsk.d2d.challenge.write.DbManager;
 import org.junit.Before;
@@ -54,9 +55,9 @@ public class RequestHandlerTest {
     @Test
     public void loaded_dailyStats_are_wrapped_into_a_response_object() {
         List<DailyStats> dummyStats = Arrays.asList(new DailyStats(), new DailyStats());
-        when(manager.loadDailyStats("dummy-region")).thenReturn(dummyStats);
+        when(manager.loadDailyStats(any())).thenReturn(dummyStats);
 
-        DailyStatsResponse dailyStatsResponse = requestHandler.loadDailyStats("dummy-region");
+        DailyStatsResponse dailyStatsResponse = requestHandler.loadDailyStats(StatsRequest.builder().build());
 
         assertThat(dailyStatsResponse.getDailyStats()).isEqualTo(dummyStats);
     }

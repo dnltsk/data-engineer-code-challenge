@@ -3,6 +3,7 @@ package org.dnltsk.d2d.challenge;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.dnltsk.d2d.challenge.model.DailyStatsResponse;
+import org.dnltsk.d2d.challenge.model.StatsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,7 +56,10 @@ public class HttpController {
         @ApiParam(name = "maxLon", value = "maxLon/maxX of bbox filter", defaultValue = "14.0")
         @RequestParam Float maxLon
     ) {
-        return ResponseEntity.ok(requestHandler.loadDailyStats(region));
+        StatsRequest statsRequest = StatsRequest.builder()
+            .region(region)
+            .build();
+        return ResponseEntity.ok(requestHandler.loadDailyStats(statsRequest));
     }
 
 }

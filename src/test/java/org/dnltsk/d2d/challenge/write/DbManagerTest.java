@@ -3,6 +3,7 @@ package org.dnltsk.d2d.challenge.write;
 import org.dnltsk.d2d.challenge.DatabasePool;
 import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.dnltsk.d2d.challenge.model.GridCell;
+import org.dnltsk.d2d.challenge.model.StatsRequest;
 import org.dnltsk.d2d.challenge.model.Trip;
 import org.dnltsk.d2d.challenge.read.DbReader;
 import org.junit.Before;
@@ -123,7 +124,7 @@ public class DbManagerTest {
         List<DailyStats> dummyStats = Arrays.asList(new DailyStats(), new DailyStats());
         when(reader.selectDailyStats(any(), any())).thenReturn(dummyStats);
 
-        List<DailyStats> dailyStats = manager.loadDailyStats("dummy-region");
+        List<DailyStats> dailyStats = manager.loadDailyStats(StatsRequest.builder().build());
 
         assertThat(dailyStats).isEqualTo(dummyStats);
     }

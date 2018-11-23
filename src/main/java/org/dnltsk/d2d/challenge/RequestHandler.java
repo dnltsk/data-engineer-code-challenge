@@ -2,6 +2,7 @@ package org.dnltsk.d2d.challenge;
 
 import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.dnltsk.d2d.challenge.model.DailyStatsResponse;
+import org.dnltsk.d2d.challenge.model.StatsRequest;
 import org.dnltsk.d2d.challenge.model.Trip;
 import org.dnltsk.d2d.challenge.parse.TripParser;
 import org.dnltsk.d2d.challenge.write.DbManager;
@@ -19,8 +20,8 @@ public class RequestHandler {
     @Autowired
     private DbManager dbManager;
 
-    public DailyStatsResponse loadDailyStats(String region) {
-        List<DailyStats> dailyStats = dbManager.loadDailyStats(region);
+    public DailyStatsResponse loadDailyStats(StatsRequest statsRequest) {
+        List<DailyStats> dailyStats = dbManager.loadDailyStats(statsRequest);
         DailyStatsResponse response = new DailyStatsResponse();
         response.setDailyStats(dailyStats);
         return response;
