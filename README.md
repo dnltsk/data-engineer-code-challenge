@@ -55,6 +55,7 @@ http://localhost:8080
   * not finished. I wanted to visualize the ingestion state on a dashboard (Grafana, Graphite, Statsd), but didn't finished yet
 * :heart: solution should be scalable
   * failed by design (ingestion via post), an event based solution would make much more sense so solve this
+  * I had the idea of a Kafka stream at the beginning but thought that the setup complexity might not be in relation for this code challenge, see https://github.com/dnltsk/spring-kafka-playground 
 * :green_heart: programming language and database
   * I used Java and Postgres/PostGIS. 
   * I thought about using Kotlin (less typing) and SQLite (in memory for testing)
