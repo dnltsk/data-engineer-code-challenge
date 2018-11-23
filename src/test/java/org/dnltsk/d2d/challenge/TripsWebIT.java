@@ -1,8 +1,9 @@
 package org.dnltsk.d2d.challenge;
 
+import org.dnltsk.d2d.challenge.db.DatabasePool;
+import org.dnltsk.d2d.challenge.db.DbInitiator;
 import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.dnltsk.d2d.challenge.model.DailyStatsResponse;
-import org.dnltsk.d2d.challenge.write.DbInitiator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

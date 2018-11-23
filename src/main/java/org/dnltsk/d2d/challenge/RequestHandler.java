@@ -1,11 +1,11 @@
 package org.dnltsk.d2d.challenge;
 
+import org.dnltsk.d2d.challenge.db.DbManager;
 import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.dnltsk.d2d.challenge.model.DailyStatsResponse;
 import org.dnltsk.d2d.challenge.model.StatsRequest;
 import org.dnltsk.d2d.challenge.model.Trip;
 import org.dnltsk.d2d.challenge.parse.TripParser;
-import org.dnltsk.d2d.challenge.write.DbManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

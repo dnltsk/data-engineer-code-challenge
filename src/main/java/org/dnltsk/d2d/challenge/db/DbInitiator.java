@@ -1,7 +1,6 @@
-package org.dnltsk.d2d.challenge.write;
+package org.dnltsk.d2d.challenge.db;
 
 import lombok.extern.slf4j.Slf4j;
-import org.dnltsk.d2d.challenge.DatabasePool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

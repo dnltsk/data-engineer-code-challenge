@@ -1,12 +1,10 @@
-package org.dnltsk.d2d.challenge.write;
+package org.dnltsk.d2d.challenge.db;
 
 import lombok.extern.slf4j.Slf4j;
-import org.dnltsk.d2d.challenge.DatabasePool;
 import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.dnltsk.d2d.challenge.model.GridCell;
 import org.dnltsk.d2d.challenge.model.StatsRequest;
 import org.dnltsk.d2d.challenge.model.Trip;
-import org.dnltsk.d2d.challenge.read.DbReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rx.Observable;

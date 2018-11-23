@@ -1,10 +1,10 @@
 package org.dnltsk.d2d.challenge;
 
+import org.dnltsk.d2d.challenge.db.DbManager;
 import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.dnltsk.d2d.challenge.model.DailyStatsResponse;
 import org.dnltsk.d2d.challenge.model.StatsRequest;
 import org.dnltsk.d2d.challenge.parse.TripParser;
-import org.dnltsk.d2d.challenge.write.DbManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package org.dnltsk.d2d.challenge;
+package org.dnltsk.d2d.challenge.db;
 
 import com.github.davidmoten.rx.jdbc.ConnectionProvider;
 import com.github.davidmoten.rx.jdbc.ConnectionProviderFromUrl;

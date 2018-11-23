@@ -1,11 +1,9 @@
-package org.dnltsk.d2d.challenge.write;
+package org.dnltsk.d2d.challenge.db;
 
-import org.dnltsk.d2d.challenge.DatabasePool;
 import org.dnltsk.d2d.challenge.model.DailyStats;
 import org.dnltsk.d2d.challenge.model.GridCell;
 import org.dnltsk.d2d.challenge.model.StatsRequest;
 import org.dnltsk.d2d.challenge.model.Trip;
-import org.dnltsk.d2d.challenge.read.DbReader;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

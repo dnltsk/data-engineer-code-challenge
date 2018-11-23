@@ -1,6 +1,7 @@
 package org.dnltsk.d2d.challenge;
 
-import org.dnltsk.d2d.challenge.write.DbInitiator;
+import org.dnltsk.d2d.challenge.db.DatabasePool;
+import org.dnltsk.d2d.challenge.db.DbInitiator;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
