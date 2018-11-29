@@ -1,5 +1,7 @@
 package org.dnltsk.d2d.challenge;
 
+import com.codahale.metrics.annotation.ExceptionMetered;
+import com.codahale.metrics.annotation.Timed;
 import com.vividsolutions.jts.io.ParseException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -28,6 +30,8 @@ public class HttpController {
 
     @ApiOperation(value = "post new trips as csv")
     @PostMapping("/trips")
+    @Timed
+    @ExceptionMetered
     public ResponseEntity<Void> postTrips(
         @ApiParam(name = "tripsAsCsv", value = "csv to upload." +
             "\n\nheader is expected (first row is getting ignored)." +
@@ -51,6 +55,8 @@ public class HttpController {
 
     @ApiOperation(value = "get statistics")
     @GetMapping("/stats")
+    @Timed
+    @ExceptionMetered
     public ResponseEntity<DailyStatsResponse> getStats(
         @ApiParam(name = "region", value = "region to filter (case-insensitive)", defaultValue = "prague")
         @RequestParam String region,
