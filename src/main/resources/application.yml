@@ -9,3 +9,9 @@ postgres:
   pass: "postgres"
   dbname: "postgres"
 
+graphite:
+  enabled: false
+  prefix: "coding_challenge.dev"
+  host: "localhost"
+  port: 2003
+  refreshPeriodInSeconds: 10
