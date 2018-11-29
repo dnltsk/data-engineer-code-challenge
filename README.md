@@ -35,9 +35,16 @@ start: `./gradlew clean bootRun` :warning: depends on a running Postgres instanc
 
 `docker-compose up` :warning: depends on build (see above), no Postgres required.
 
-## accessing
+## accessing application
 
-http://localhost:8080
+* Swagger UI: http://localhost:8080
+
+## accessing metrics
+
+* Grafana: http://localhost:80 (credentials are admin/admin)<br>
+simply import the prepared dashboard under [misc/grafana-dashboard.json](misc/grafana-dashboard.json) 
+
+* Graphite: http://localhost:81
 
 ## about my solution
 
@@ -72,7 +79,7 @@ _(created with DbVisualizer)_
 
 #### debug / preview with QGIS
 
-![erd](misc/qgis-screenshot.png "erd")
+![qgis-screenshot](misc/qgis-screenshot.png "qgis-screenshot")
 
 _(created with QGIS)_
 
@@ -81,6 +88,10 @@ _(created with QGIS)_
 ![aws architecture sketch](misc/aws-architecture-sketch.png "aws architecture sketch")
 
 _(created with lucidchart)_
+
+#### Grafana dashboard
+
+![grafana dashboard](misc/grafana-dashboard-screenshot.png "grafana dashboard")
 
 #### what I've learned
 
