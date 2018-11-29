@@ -10,6 +10,8 @@ services:
       - "8080:8080"
     environment:
       - postgres.host=postgis
+      - graphite.host=monitoring
+      - graphite.enabled=true
 
   postgis:
     image: "mdillon/postgis:10"
@@ -19,3 +21,12 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
 
+  monitoring:
+    image: "kamon/grafana_graphite:latest"
+    container_name: monitoring
+    ports:
+      - 80:80     # Grafana
+      - 81:81     # Graphite web
+      - 2003:2003 # Graphite data
+      - 8125:8125 # StatsD
+      - 8126:8126 # StatsD admin
